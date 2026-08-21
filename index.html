@@ -4,9 +4,107 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daftar Lagu Favorit</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- KODE CSS -->
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f7f6;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 0;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #4CAF50;
+    }
+
+    button {
+      padding: 10px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #searchInput {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f8f9fa;
+      color: #555;
+    }
+
+    .delete-btn {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #cc0000;
+    }
+  </style>
 </head>
 <body>
+
   <div class="container">
     <h1>🎵 Daftar Lagu Favorit</h1>
 
@@ -35,6 +133,76 @@
     </table>
   </div>
 
-  <script src="script.js"></script>
+  <!-- KODE JAVASCRIPT -->
+  <script>
+    const songForm = document.getElementById('songForm');
+    const songList = document.getElementById('songList');
+
+    // Data awal lagu
+    let songs = [
+      { title: "Hati-Hati di Jalan", artist: "Tulus" },
+      { title: "Yellow", artist: "Coldplay" }
+    ];
+
+    // Fungsi untuk menampilkan daftar lagu ke tabel
+    function renderSongs() {
+      songList.innerHTML = "";
+
+      songs.forEach((song, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${song.title}</td>
+          <td>${song.artist}</td>
+          <td><button class="delete-btn" onclick="deleteSong(${index})">Hapus</button></td>
+        `;
+        songList.appendChild(row);
+      });
+    }
+
+    // Tambah lagu baru
+    songForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const titleInput = document.getElementById('songTitle');
+      const artistInput = document.getElementById('songArtist');
+
+      songs.push({
+        title: titleInput.value,
+        artist: artistInput.value
+      });
+
+      // Reset form
+      titleInput.value = "";
+      artistInput.value = "";
+
+      renderSongs();
+    });
+
+    // Hapus lagu
+    function deleteSong(index) {
+      songs.splice(index, 1);
+      renderSongs();
+    }
+
+    // Filter pencarian lagu
+    function filterSongs() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const rows = songList.getElementsByTagName('tr');
+
+      Array.from(rows).forEach(row => {
+        const title = row.getElementsByTagName('td')[0].textContent.toLowerCase();
+        const artist = row.getElementsByTagName('td')[1].textContent.toLowerCase();
+
+        if (title.includes(query) || artist.includes(query)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+
+    // Tampilkan lagu saat halaman dimuat
+    renderSongs();
+  </script>
 </body>
 </html>
