@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Lagu Favorit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Daftar Lagu Favorit</h1>
+
+    <!-- Form Input Lagu -->
+    <form id="songForm">
+      <input type="text" id="songTitle" placeholder="Judul Lagu" required>
+      <input type="text" id="songArtist" placeholder="Nama Penyanyi / Band" required>
+      <button type="submit">Tambah Lagu</button>
+    </form>
+
+    <!-- Fitur Pencarian -->
+    <input type="text" id="searchInput" placeholder="🔍 Cari judul atau penyanyi..." onkeyup="filterSongs()">
+
+    <!-- Tabel Daftar Lagu -->
+    <table id="songTable">
+      <thead>
+        <tr>
+          <th>Judul Lagu</th>
+          <th>Penyanyi</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="songList">
+        <!-- Lagu akan muncul di sini secara dinamis -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
